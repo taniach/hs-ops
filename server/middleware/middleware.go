@@ -19,6 +19,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// Config is a format to store json from config file
 type Config struct {
 	Database struct {
 		User     string `json:"user"`
@@ -27,6 +28,7 @@ type Config struct {
 	}
 }
 
+// LoadConfiguration reads and returns the config file
 func LoadConfiguration() (Config, error) {
 	var config Config
 	absPath, _ := filepath.Abs("config.json")
