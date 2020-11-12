@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"path/filepath"
 
 	"go_todo/server/models"
 
@@ -17,10 +19,32 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+type Config struct {
+	Database struct {
+		User     string `json:"user"`
+		Password string `json:"password"`
+		Dbname   string `json:"dbname"`
+	}
+}
+
+func LoadConfiguration() (Config, error) {
+	var config Config
+	absPath, _ := filepath.Abs("config.json")
+	configFile, err := ioutil.ReadFile(absPath)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_ = json.Unmarshal([]byte(configFile), &config)
+
+	return config, err
+}
+
 // DB connection string
 // for localhost mongoDB
 // const connectionString = "mongodb://localhost:27017"
-const connectionString = "mongodb+srv://admin:hzJJ4jIw0q1a86j2@cluster0.qaokj.mongodb.net/testdb?retryWrites=true&w=majority"
+const connectionString = "mongodb+srv://%v:%v@cluster0.qaokj.mongodb.net/%v?retryWrites=true&w=majority"
 
 // Database Name
 const dbName = "test"
@@ -33,9 +57,11 @@ var collection *mongo.Collection
 
 // create connection with mongo db
 func init() {
+	config, _ := LoadConfiguration()
+	currentConnectionString := fmt.Sprintf(connectionString, config.Database.User, config.Database.Password, config.Database.Dbname)
 
 	// Set client options
-	clientOptions := options.Client().ApplyURI(connectionString)
+	clientOptions := options.Client().ApplyURI(currentConnectionString)
 
 	// connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOptions)
