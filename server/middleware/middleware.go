@@ -53,9 +53,11 @@ const dbName = "test"
 
 // Collection name
 const collName = "todolist"
+const salesCollectionName = "sales"
 
 // collection object/instance
 var collection *mongo.Collection
+var salesCollection *mongo.Collection
 
 // create connection with mongo db
 func init() {
@@ -82,6 +84,7 @@ func init() {
 	fmt.Println("Connected to MongoDB!")
 
 	collection = client.Database(dbName).Collection(collName)
+	salesCollection = client.Database(dbName).Collection(salesCollectionName)
 
 	fmt.Println("Collection instance created!")
 }
