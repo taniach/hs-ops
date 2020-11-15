@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+
+	//"io/ioutil"
 	"log"
 	"net/http"
-	"path/filepath"
+
+	//"path/filepath"
 
 	"go_todo/server/models"
 
@@ -20,16 +22,16 @@ import (
 )
 
 // Config is a format to store json from config file
-type Config struct {
+/* type Config struct {
 	Database struct {
 		User     string `json:"user"`
 		Password string `json:"password"`
 		Dbname   string `json:"dbname"`
 	}
-}
+} */
 
 // LoadConfiguration reads and returns the config file
-func LoadConfiguration() (Config, error) {
+/* func LoadConfiguration() (Config, error) {
 	var config Config
 	absPath, _ := filepath.Abs("config.json")
 	configFile, err := ioutil.ReadFile(absPath)
@@ -41,7 +43,7 @@ func LoadConfiguration() (Config, error) {
 	_ = json.Unmarshal([]byte(configFile), &config)
 
 	return config, err
-}
+} */
 
 // DB connection string
 // for localhost mongoDB
