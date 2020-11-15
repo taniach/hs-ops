@@ -11,5 +11,7 @@ import (
 func main() {
 	r := router.Router()
 	fmt.Println("Starting server on the port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	http.Handle("/", http.FileServer(http.Dir("./web")))
+	http.Handle("/api", r)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
