@@ -8,6 +8,47 @@ import { NumberPicker } from "../utils/NumberPicker";
 let endpoint = "http://localhost:8080";
 
 class ShipASale extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      items: []
+    };
+  }
+
+  onChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  onSubmit = () => {
+    this.getTask();
+  };
+
+  getTask = () => {
+    axios.get(endpoint + "/api/sales").then(res => {
+      console.log(res);
+      if (res.data) {
+        this.setState({
+          items: res.data.map(item => {
+            return (
+              <Card>
+                <Card.Content>
+                  {item.customername}
+                </Card.Content>
+              </Card>
+            );
+          })
+        });
+      } else {
+        this.setState({
+          items: []
+        });
+      }
+    });
+  };
+
   render() {
     return (
       <Card>
@@ -17,7 +58,7 @@ class ShipASale extends React.Component {
         />
         <Card.Content>
           <Card.Description>
-            <Form>
+            <Form onSubmit={this.onSubmit}>
               <Form.Field>
                 <label>Date of Order</label>
                 <Datepick></Datepick>
@@ -83,8 +124,11 @@ class ShipASale extends React.Component {
               <Button type='submit'>Submit</Button>
             </Form>
           </Card.Description>
+
+          {this.state.items}
         </Card.Content>
       </Card>
+      
     );
   }
 }
