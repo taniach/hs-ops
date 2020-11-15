@@ -61,8 +61,9 @@ var salesCollection *mongo.Collection
 
 // create connection with mongo db
 func init() {
-	config, _ := LoadConfiguration()
-	currentConnectionString := fmt.Sprintf(connectionString, config.Database.User, config.Database.Password, config.Database.Dbname)
+	//config, _ := LoadConfiguration()
+	//currentConnectionString := fmt.Sprintf(connectionString, config.Database.User, config.Database.Password, config.Database.Dbname)
+	currentConnectionString := "mongodb+srv://admin:XgAOYDZDj2cyLR2x@cluster0.qaokj.mongodb.net/test?retryWrites=true&w=majority"
 
 	// Set client options
 	clientOptions := options.Client().ApplyURI(currentConnectionString)
