@@ -5,11 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	//"io/ioutil"
 	"log"
 	"net/http"
-
-	//"path/filepath"
 
 	"go_todo/server/models"
 
@@ -20,30 +17,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-// Config is a format to store json from config file
-/* type Config struct {
-	Database struct {
-		User     string `json:"user"`
-		Password string `json:"password"`
-		Dbname   string `json:"dbname"`
-	}
-} */
-
-// LoadConfiguration reads and returns the config file
-/* func LoadConfiguration() (Config, error) {
-	var config Config
-	absPath, _ := filepath.Abs("config.json")
-	configFile, err := ioutil.ReadFile(absPath)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_ = json.Unmarshal([]byte(configFile), &config)
-
-	return config, err
-} */
 
 // DB connection string
 // for localhost mongoDB
@@ -63,8 +36,6 @@ var salesCollection *mongo.Collection
 
 // create connection with mongo db
 func init() {
-	//config, _ := LoadConfiguration()
-	//currentConnectionString := fmt.Sprintf(connectionString, config.Database.User, config.Database.Password, config.Database.Dbname)
 	currentConnectionString := "mongodb+srv://admin:XgAOYDZDj2cyLR2x@cluster0.qaokj.mongodb.net/test?retryWrites=true&w=majority"
 
 	// Set client options
