@@ -4,23 +4,19 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"go_todo/server/models"
 	"log"
 	"net/http"
 	"os"
 
-	"go_todo/server/models"
-
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-// DB connection string
-// for localhost mongoDB
-// const connectionString = "mongodb://localhost:27017"
 
 // Database Name
 const dbName = "test"
@@ -33,8 +29,23 @@ const salesCollectionName = "sales"
 var collection *mongo.Collection
 var salesCollection *mongo.Collection
 
+func goDotEnvVariable(key string) string {
+
+	// load .env file
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
+}
+
 // create connection with mongo db
 func init() {
+	// Local
+	// currentConnectionString := goDotEnvVariable("DATABASE_URL")
+	// Production
 	currentConnectionString := os.Getenv("DATABASE_URL")
 
 	// Set client options
