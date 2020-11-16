@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
 	"log"
 	"net/http"
+	"os"
 
 	"go_todo/server/models"
 
@@ -21,7 +21,6 @@ import (
 // DB connection string
 // for localhost mongoDB
 // const connectionString = "mongodb://localhost:27017"
-const connectionString = "mongodb+srv://%v:%v@cluster0.qaokj.mongodb.net/%v?retryWrites=true&w=majority"
 
 // Database Name
 const dbName = "test"
@@ -36,7 +35,7 @@ var salesCollection *mongo.Collection
 
 // create connection with mongo db
 func init() {
-	currentConnectionString := "mongodb+srv://admin:XgAOYDZDj2cyLR2x@cluster0.qaokj.mongodb.net/test?retryWrites=true&w=majority&connect=direct"
+	currentConnectionString := os.Getenv("DATABASE_URL")
 
 	// Set client options
 	clientOptions := options.Client().ApplyURI(currentConnectionString)
