@@ -43,10 +43,13 @@ func goDotEnvVariable(key string) string {
 
 // create connection with mongo db
 func init() {
-	// Local
-	// currentConnectionString := goDotEnvVariable("DATABASE_URL")
 	// Production
 	currentConnectionString := os.Getenv("DATABASE_URL")
+
+	if len(currentConnectionString) == 0 {
+		// Local
+		currentConnectionString = goDotEnvVariable("DATABASE_URL")
+	}
 
 	// Set client options
 	clientOptions := options.Client().ApplyURI(currentConnectionString)
