@@ -12,9 +12,9 @@ import (
 func main() {
 	r := router.Router()
 	// Production
-	port := os.Getenv("PORT")
+	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
 
-	if len(port) == 0 {
+	if len(port) < 2 {
 		// Local
 		port = ":8080"
 	}
